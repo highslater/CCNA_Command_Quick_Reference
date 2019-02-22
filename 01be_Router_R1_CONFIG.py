@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-##01bd_Router_R1_SERIAL
+##01bd_Router_R1_CONFIG
 
 
 import getpass
@@ -23,6 +23,20 @@ tn.write(b"conf t\n")
 tn.write(b"interface serial 2/0\n")
 tn.write(b"description Serial LINK to ISPe NETWORK 172.16.20.0 /24\n")
 tn.write(b"ip address 172.16.20.2 255.255.255.0\n")
+tn.write(b"no shutdown\n")
+tn.write(b"exit\n")
+
+##### Configure ETHERNET 0/0
+tn.write(b"interface ethernet 0/0\n")
+tn.write(b"description Ethernet LINK to LAN NETWORK 10.0.1.0 /24\n")
+tn.write(b"ip address 10.0.1.1 255.255.255.0\n")
+tn.write(b"no shutdown\n")
+tn.write(b"exit\n")
+
+##### Configure ETHERNET 0/1
+tn.write(b"interface ethernet 0/1\n")
+tn.write(b"description Ethernet LINK to LAN NETWORK 10.0.0.0 /24\n")
+tn.write(b"ip address 10.0.0.3 255.255.255.0\n")
 tn.write(b"no shutdown\n")
 tn.write(b"exit\n")
 
