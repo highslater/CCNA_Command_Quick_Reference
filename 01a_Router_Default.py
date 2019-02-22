@@ -19,10 +19,11 @@ if password:
     tn.write(password.encode('ascii') + b"\n")
 
 tn.write(b"conf t\n")
+tn.write(b"service password-encryption\n")
 tn.write(b"enable secret cisco\n")
 tn.write(b"username ccna privilege 15 secret cisco\n")
 tn.write(b"ip domain-lookup\n")
-tn.write(b"ip name-server 192.168.122.1\n")
+tn.write(b"ip name-server 192.168.1.1\n")
 tn.write(b"ip http server\n")
 tn.write(b"ip domain-name gns3.com\n")
 tn.write(b"line console 0\n")
