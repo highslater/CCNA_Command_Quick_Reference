@@ -40,6 +40,13 @@ for line in f:
     tn.write(
     b"banner exec &\n\n"\
     b"     *****     With Great Power Comes Great Resposibility     *****\n\n&\n")
+#####Configure VTP TRANSPARENT
+    tn.write(b"vtp domain gns3.com\n")
+    tn.write(b"vtp mode transparent\n")
+    tn.write(b"vtp password cisco\n")
+    tn.write(b"vtp version 3\n")
+#####Configure NO CDP
+    tn.write(b"no cdp run\n")
 #####Configure Default Security Settings
     tn.write(b"service password-encryption\n")
     tn.write(b"no ip routing\n")
