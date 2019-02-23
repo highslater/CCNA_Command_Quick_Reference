@@ -75,6 +75,15 @@ for line in f:
 
     tn.write(b"vlan 99\n")
     tn.write(b"name MANAGEMENT\n")
+#####Configure Default MANAGEMENT Interfaces
+    tn.write(B"interface range e0/0 - 3, e1/0 - 3\n")
+    tn.write(B"description MANAGEMENT VLAN 99\n")
+#####Configure Default PRODUCTION Interfaces
+    tn.write(B"interface range e2/1 - 3, e3/0 - 3\n")
+    tn.write(B"description PRODUCTION VLAN\n")
+#####Configure Default PRODUCTION GATEWAY Interface
+    tn.write(B"interface e2/0\n")
+    tn.write(B"description PRODUCTION GATEWAY\n")
 #####Exit, Copy Configuration, and LOGOUT
     tn.write(b"exit\n")
     tn.write(b"exit\n")
