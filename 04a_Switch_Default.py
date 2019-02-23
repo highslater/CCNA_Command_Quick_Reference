@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-##Switch_Default.py
+##04a_Switch_Default.py
 
 import getpass
 import telnetlib
@@ -67,23 +67,31 @@ for line in f:
     tn.write(b"exec-timeout 0 0\n")
     tn.write(b"login local\n")
     tn.write(b"exit\n")
-#####Create 10 vlans and MANAGEMENT Vlan
-    for n in range(2, 11):
+#####Create 5 vlans(2-5), vlan 100 and MANAGEMENT Vlan
+    for n in range(2, 6):
         num = str(n).encode('ascii') + b"\n"
         tn.write(b"vlan " + num)
         tn.write(b"name vlan__" + num)
 
     tn.write(b"vlan 99\n")
     tn.write(b"name MANAGEMENT\n")
+    tn.write(b"vlan 100\n")
+    tn.write(b"name PRODUCTION\n")
 #####Configure Default MANAGEMENT Interfaces
     tn.write(B"interface range e0/0 - 3, e1/0 - 3\n")
     tn.write(B"description MANAGEMENT VLAN 99\n")
 #####Configure Default PRODUCTION Interfaces
     tn.write(B"interface range e2/1 - 3, e3/0 - 3\n")
-    tn.write(B"description PRODUCTION VLAN\n")
+    tn.write(B"description PRODUCTION VLAN 100\n")
+    tn.write(B"switchport mode access\n")
+    tn.write(B"switchport access vlan 100\n")
+    tn.write(B"no shutdown\n")
 #####Configure Default PRODUCTION GATEWAY Interface
     tn.write(B"interface e2/0\n")
-    tn.write(B"description PRODUCTION GATEWAY\n")
+    tn.write(B"description PRODUCTION VLAN 100 GATEWAY\n")
+    tn.write(B"switchport mode access\n")
+    tn.write(B"switchport access vlan 100\n")
+    tn.write(B"no shutdown\n")
 #####Exit, Copy Configuration, and LOGOUT
     tn.write(b"exit\n")
     tn.write(b"exit\n")
