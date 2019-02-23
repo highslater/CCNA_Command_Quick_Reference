@@ -6,30 +6,36 @@
 import getpass
 import telnetlib
 
-HOST = input("Enter HOST ADDRESS: ")
 user = input("Enter your remote account: ")
 password = getpass.getpass()
 
-tn = telnetlib.Telnet(HOST)
-tn.read_until(b"Username: ")
-tn.write(user.encode('ascii') + b"\n")
+f = open("Routers.txt")
 
-if password:
-    tn.read_until(b"Password: ")
-    tn.write(password.encode('ascii') + b"\n")
+for line in f:
+    tn = telnetlib.Telnet(line)
+    tn.read_until(b"Username: ")
+    tn.write(user.encode('ascii') + b"\n")
+
+    if password:
+        tn.read_until(b"Password: ")
+        tn.write(password.encode('ascii') + b"\n")
 
 ##### Configure MOTD Banner
-tn.write(b"conf t\n")
-tn.write(
-b"banner motd &\n\n\n"\
-b" CCNA Command Quick Reference\n\n&")
+    tn.write(b"conf t\n")
+    tn.write(
+    b"banner motd &\n\n\n"\
+    b" CCNA Command Quick Reference\n\n&")
 
-tn.write(b"exit\n")
-tn.write(b"exit\n")
-tn.write(b"cop r s\n")
-tn.write(b"\n")
-tn.write(b"exit\n")
-print("\n\n\n*** START ***")
-print(tn.read_all().decode('ascii'))
-print("*** COMPLETE ***\n\n\n")
+    tn.write(b"exit\n")
+    tn.write(b"exit\n")
+    tn.write(b"cop r s\n")
+    tn.write(b"\n")
+    tn.write(b"exit\n")
+#####Output: >>>>> Commands Entered
+    print("\n***** START *****")
+    print("*****" + line)
+    print(tn.read_all().decode('ascii'))
+    print("***** COMPLETE *****")
+    print("*****" + line)
+
 
