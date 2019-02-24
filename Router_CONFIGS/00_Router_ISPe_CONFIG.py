@@ -66,6 +66,7 @@ tn.write(b"exit\n")
 tn.write(b"router rip\n")
 tn.write(b"network 172.16.0.0 \n")
 tn.write(b"network 1.0.0.0\n")
+tn.write(b"default-information originate\n")
 tn.write(b"exit\n")
 #####
 tn.write(b"exit\n")
