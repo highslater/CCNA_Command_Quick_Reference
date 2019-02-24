@@ -38,7 +38,7 @@ for line in f:
 ##### Configure EXEC Banner
     tn.write(
     b"banner exec &\n\n"\
-    b"     *****     With Great Power Comes Great Resposibility     *****\n\n&")
+    b"     *****     With Great Power Comes Great Resposibility     *****\n\n&\n")
 ##### Configure Default SECURITY
     tn.write(b"service password-encryption\n")
     tn.write(b"enable secret cisco\n")

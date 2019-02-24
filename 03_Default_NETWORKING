@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+
+##05_Default_NETWORKING
+
+
+import getpass
+import telnetlib
+
+user = input("Enter your remote account: ")
+password = getpass.getpass()
+f = open("Routers.txt")
+
+for line in f:
+    tn = telnetlib.Telnet(line)
+    tn.read_until(b"Username: ")
+    tn.write(user.encode('ascii') + b"\n")
+
+    if password:
+        tn.read_until(b"Password: ")
+        tn.write(password.encode('ascii') + b"\n")
+
+    tn.write(b"conf t\n")
+
+##### Configure Loopback 0
+    tn.write(b"interface loopback 0\n")
+    tn.write(b"ip address 1.1.1.1 255.255.255.255\n")
+    tn.write(b"exit\n")
+##### Configure RIPv2
+    tn.write(b"router rip\n")
+    tn.write(b"version 2\n")
+    tn.write(b"network 0.0.0.0\n")
+    tn.write(b"passive-interface e0/1\n")
+    tn.write(b"no auto-summary\n")
+    tn.write(b"exit\n")
+##### Configure EIGRP
+    tn.write(b"router eigrp 90\n")
+    tn.write(b"network 0.0.0.0 0.0.0.0\n")
+    tn.write(b"passive-interface e0/1\n")
+    tn.write(b"eigrp router-id 1.1.1.1\n")
+    tn.write(b"no auto-summary\n")
+    tn.write(b"shutdown\n")
+    tn.write(b"exit\n")
+##### Configure OSPF
+    tn.write(b"router ospf 110\n")
+    tn.write(b"network 0.0.0.0 0.0.0.0 area 0\n")
+    tn.write(b"passive-interface e0/1\n")
+    tn.write(b"router-id 1.1.1.1\n")
+    tn.write(b"shutdown\n")
+    tn.write(b"exit\n")
+##### Configure OSPFv3
+    #tn.write(b"router ospf 110\n")
+    #tn.write(b"network 0.0.0.0 0.0.0.0 area 0\n")
+    #tn.write(b"passive-interface e0/1\n")
+    #tn.write(b"router-id 1.1.1.1\n")
+    #tn.write(b"exit\n")
+##### EXIT, WRITE MEMORY, and LOGOUT
+    tn.write(b"exit\n")
+    tn.write(b"exit\n")
+    tn.write(b"cop r s\n")
+    tn.write(b"\n")
+    tn.write(b"exit\n")
+    print("\n*** START ***")
+    print("****"+ line + "\n")
+    print(tn.read_all().decode('ascii'))
+    print("*** COMPLETE ***")
+    print("****"+ line + "\n")
+
