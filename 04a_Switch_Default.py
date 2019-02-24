@@ -80,6 +80,9 @@ for line in f:
 #####Configure Default MANAGEMENT Interfaces
     tn.write(B"interface range e0/0 - 3, e1/0 - 3\n")
     tn.write(B"description MANAGEMENT VLAN 99\n")
+    tn.write(B"switchport mode access\n")
+    tn.write(B"switchport access vlan 99\n")
+    tn.write(B"no shutdown\n")
 #####Configure Default PRODUCTION Interfaces
     tn.write(B"interface range e2/1 - 3, e3/0 - 3\n")
     tn.write(B"description PRODUCTION VLAN 100\n")
