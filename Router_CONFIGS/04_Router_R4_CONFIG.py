@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-##01bg_Router_R3_CONFIG
+##04_Router_R4_CONFIG
 
 
 import getpass
 import telnetlib
 
-HOST = input("Enter HOST ADDRESS: ")
+HOST = input("IP Address of R4: ")
 user = input("Enter your remote account: ")
 password = getpass.getpass()
 
@@ -21,25 +21,34 @@ if password:
 tn.write(b"conf t\n")
 ##### Configure SERIAL 2/0
 tn.write(b"interface serial 2/0\n")
-tn.write(b"description Serial LINK to ISPe NETWORK 172.16.20.0 /24\n")
-tn.write(b"ip address 172.16.20.2 255.255.255.0\n")
+tn.write(b"description Serial LINK to R2 NETWORK 172.16.30.0 /24\n")
+tn.write(b"ip address 172.16.30.2 255.255.255.0\n")
 tn.write(b"no shutdown\n")
 tn.write(b"exit\n")
-
 ##### Configure ETHERNET 0/0
 tn.write(b"interface ethernet 0/0\n")
-tn.write(b"description Ethernet LINK to LAN NETWORK 10.0.1.0 /24\n")
-tn.write(b"ip address 10.0.1.1 255.255.255.0\n")
+tn.write(b"description Ethernet LINK to MANAGEMENT NETWORK 10.0.0.0 /24\n")
+tn.write(b"ip address 10.0.0.11 255.255.255.0\n")
 tn.write(b"no shutdown\n")
 tn.write(b"exit\n")
-
 ##### Configure ETHERNET 0/1
 tn.write(b"interface ethernet 0/1\n")
-tn.write(b"description Ethernet LINK to LAN NETWORK 10.0.0.0 /24\n")
-tn.write(b"ip address 10.0.0.3 255.255.255.0\n")
+tn.write(b"description Ethernet LINK to LAN NETWORK 10.0.3.0 /24\n")
+tn.write(b"ip address 10.0.3.1 255.255.255.0\n")
 tn.write(b"no shutdown\n")
 tn.write(b"exit\n")
-
+##### 07 Configure Loopback 0
+tn.write(b"interface loopback 0\n")
+tn.write(b"ip address 4.4.4.4 255.255.255.255\n")
+tn.write(b"no shutdown\n")
+tn.write(b"exit\n")
+##### 08 Configure RIPv2
+tn.write(b"router rip\n")
+tn.write(b"network 10.0.0.0\n")
+tn.write(b"network 172.16.0.0\n")
+tn.write(b"network 4.0.0.0\n")
+tn.write(b"exit\n")
+#####
 tn.write(b"exit\n")
 tn.write(b"cop r s\n")
 tn.write(b"\n")

@@ -23,18 +23,21 @@ for line in f:
 
 ##### Configure Loopback 0
     tn.write(b"interface loopback 0\n")
-    tn.write(b"ip address 1.1.1.1 255.255.255.255\n")
+    tn.write(b"no ip address\n")
+    tn.write(b"description Loopback to IDENTIFY Router\n")
     tn.write(b"exit\n")
 ##### Configure RIPv2
     tn.write(b"router rip\n")
     tn.write(b"version 2\n")
-    tn.write(b"network 0.0.0.0\n")
+    tn.write(b"network 172.16.0.0\n")
+    tn.write(b"passive-interface e0/0\n")
     tn.write(b"passive-interface e0/1\n")
     tn.write(b"no auto-summary\n")
     tn.write(b"exit\n")
 ##### Configure EIGRP
     tn.write(b"router eigrp 90\n")
-    tn.write(b"network 0.0.0.0 0.0.0.0\n")
+    tn.write(b"network 172.16.0.0 0.0.255.255\n")
+    tn.write(b"passive-interface e0/0\n")
     tn.write(b"passive-interface e0/1\n")
     tn.write(b"eigrp router-id 1.1.1.1\n")
     tn.write(b"no auto-summary\n")
@@ -42,7 +45,8 @@ for line in f:
     tn.write(b"exit\n")
 ##### Configure OSPF
     tn.write(b"router ospf 110\n")
-    tn.write(b"network 0.0.0.0 0.0.0.0 area 0\n")
+    tn.write(b"network 172.16.0.0 0.0.255.255 area 0\n")
+    tn.write(b"passive-interface e0/0\n")
     tn.write(b"passive-interface e0/1\n")
     tn.write(b"router-id 1.1.1.1\n")
     tn.write(b"shutdown\n")
