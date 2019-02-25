@@ -51,12 +51,6 @@ for line in f:
     tn.write(b"router-id 1.1.1.1\n")
     tn.write(b"shutdown\n")
     tn.write(b"exit\n")
-##### Configure OSPFv3
-    #tn.write(b"router ospf 110\n")
-    #tn.write(b"network 0.0.0.0 0.0.0.0 area 0\n")
-    #tn.write(b"passive-interface e0/1\n")
-    #tn.write(b"router-id 1.1.1.1\n")
-    #tn.write(b"exit\n")
 ##### EXIT, WRITE MEMORY, and LOGOUT
     tn.write(b"exit\n")
     tn.write(b"exit\n")
