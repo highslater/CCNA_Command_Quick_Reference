@@ -8,11 +8,11 @@ import telnetlib
 
 user = input("Enter your remote account: ")
 password = getpass.getpass()
-f1 = open("Routers.txt")
-f2 = open("Switches.txt")
+Routers = open("Routers.txt")
+Switches = open("Switches.txt")
 
 
-for file in (f1, f2):
+for file in (Routers, Switches):
     for line in file:
         tn = telnetlib.Telnet(line)
         tn.read_until(b"Username: ")
