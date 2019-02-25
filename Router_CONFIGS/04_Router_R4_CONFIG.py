@@ -57,7 +57,7 @@ tn.write(b"passive-interface e0/0\n")
 tn.write(b"passive-interface e0/1\n")
 tn.write(b"eigrp router-id 4.4.4.4\n")
 tn.write(b"no auto-summary\n")
-tn.write(b"shutdown\n")
+tn.write(b"no shutdown\n")
 tn.write(b"exit\n")
 ##### Configure OSPF
 tn.write(b"router ospf 110\n")
