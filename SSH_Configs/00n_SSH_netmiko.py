@@ -1,38 +1,37 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
 
 ##00n_SSH_netmiko.py
 
-import paramiko
-import time
 
-ip_address = "10.0.0.1"
-username = "ccna"
-password = "cisco"
 
-ssh_client = paramiko.SSHClient()
-ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-# THE COMMAND BELOW DOES NOT WORK UNCOMMENT THE LINE BELOW TO GET THIS WORKING.
-#ssh_client.connect(hostname=ip_address,username=username,password=password)
-ssh_client.connect(hostname=ip_address,username=username,password=password, look_for_keys=False, allow_agent=False)
+from netmiko import ConnectHandler
 
-time.sleep(1)
-print("\n\n****** SSH")
-print("CONNECTING to >  "), ip_address
-time.sleep(2)
-print("\t      >   CONNECTED")
-remote_connection = ssh_client.invoke_shell()
-remote_connection.send("configure terminal\n")
-remote_connection.send("no int loop 10\n")
-#remote_connection.send("ip address 10.10.10.10 255.255.255.255\n")
-remote_connection.send("end\n")
-remote_connection.send("wr\n")
-time.sleep(1)
-print("\n\nOUTPUT BEGINS >")
-output = remote_connection.recv(65535)
-print("\n" + output)
-print("\n\n< OUTPUT ENDS")
-print("\n\n********* SSH")
-print("DISCONNECTING from <  "), ip_address
-time.sleep(2)
+R1 = {
+    'device_type': 'cisco_ios',
+    'ip': '10.0.0.1',
+    'username': 'ccna',
+    'password': 'cisco',
+}
+
+print("\n\n****** SSH : user = (" + R1['username'] + ")")
+print("CONNECTING to >  " + R1['ip'])
+
+net_connect = ConnectHandler(**R1)
+
+print("\t      >   CONNECTED\n")
+
+output_0 = net_connect.send_command('show ip route | i via')
+output_1 = net_connect.send_command('show ip interface brief | include up')
+output_2 = net_connect.send_command('show run | s eigrp')
+output_3 = net_connect.send_command('show run | s ip access-list')
+
+print("\nOUTPUT BEGINS >\n\n")
+print(output_0 + "\n\n")
+print(output_2 + "\n\n")
+print(output_3 + "\n\n")
+print(output_1 + "\n")
+print("\n< OUTPUT ENDS")
+print("\n\n********* SSH : user = (" + R1['username'] + ")")
+print("DISCONNECTING from <  " + R1['ip'])
 print("\t\t   <   DISCONNECTED\n\n")
-ssh_client.close
