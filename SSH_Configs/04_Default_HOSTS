@@ -2,53 +2,43 @@
 
 ##04_Default_HOSTS
 
+from netmiko import ConnectHandler
+import time
 
-import getpass
-import telnetlib
+f1 = open('Routers.txt')
+f2 = open('Switches.txt')
 
-user = input("Enter your remote account: ")
-password = getpass.getpass()
-Routers = open("Routers.txt")
-Switches = open("Switches.txt")
+config_commands = [
+    "ip host pc1 10.0.1.2\n",
+    "ip host pc2 10.0.2.2\n",
+    "ip host pc3 10.0.3.2\n",
+    "ip host pc4 10.0.4.2\n",
+    "ip host ub1 10.0.0.2\n",
+    "ip host sw1 10.0.0.4\n",
+    "ip host sw2 10.0.0.5\n",
+    "ip host sw3 10.0.0.6\n",
+    "ip host sw4 10.0.0.10\n",
+    "ip host sw5 10.0.0.9\n",
+    "ip host r1 10.0.0.3\n",
+    "ip host r2 10.0.0.7\n",
+    "ip host r3 10.0.0.8\n",
+    "ip host r4 10.0.0.11\n",
+    "ip host ispe 10.0.0.1\n",
+]
 
-
-for file in (Routers, Switches):
+for file in (f1, f2):
     for line in file:
-        tn = telnetlib.Telnet(line)
-        tn.read_until(b"Username: ")
-        tn.write(user.encode('ascii') + b"\n")
-
-        if password:
-            tn.read_until(b"Password: ")
-            tn.write(password.encode('ascii') + b"\n")
-
-        tn.write(b"conf t\n")
-##### Configure HOSTS
-        tn.write(b"ip host pc1 10.0.1.2\n")
-        tn.write(b"ip host pc2 10.0.2.2\n")
-        tn.write(b"ip host pc3 10.0.3.2\n")
-        tn.write(b"ip host pc4 10.0.4.2\n")
-        tn.write(b"ip host ub1 10.0.0.2\n")
-
-        tn.write(b"ip host sw1 10.0.0.4\n")
-        tn.write(b"ip host sw2 10.0.0.5\n")
-        tn.write(b"ip host sw3 10.0.0.6\n")
-        tn.write(b"ip host sw4 10.0.0.10\n")
-        tn.write(b"ip host sw5 10.0.0.9\n")
-
-        tn.write(b"ip host r1 10.0.0.3\n")
-        tn.write(b"ip host r2 10.0.0.7\n")
-        tn.write(b"ip host r3 10.0.0.8\n")
-        tn.write(b"ip host r4 10.0.0.11\n")
-        tn.write(b"ip host ispe 10.0.0.1\n")
-##### EXIT, WRITE MEMORY, and LOGOUT
-        tn.write(b"exit\n")
-        tn.write(b"exit\n")
-        tn.write(b"cop r s\n")
-        tn.write(b"\n")
-        tn.write(b"exit\n")
-        print("\n*** START ***")
-        print("****"+ line + "\n")
-        print(tn.read_all().decode('ascii'))
-        print("*** COMPLETE ***")
-        print("****"+ line + "\n")
+        D = eval(line)[1]
+        R = eval(line)[0]
+        print("\n****** SSH : user = (" + D['username'] + ")")
+        print("CONNECTING to :  " + R + "  <  at  >  " +  D['ip'])
+        net_connect = ConnectHandler(**D)
+        print("\t      >  CONNECTED")
+        output = net_connect.send_config_set(config_commands)
+        print("OUTPUT BEGINS >\n")
+        print(output + "\n")
+        print("< OUTPUT ENDS")
+        print("********* SSH : user = (" + D['username'] + ")")
+        print("DISCONNECTING from :  " + R + "  <  at  >  " + D['ip'])
+        print("\t\t   <  DISCONNECTED\n\n")
+print("\n\nProgram ENDS\n\n")
