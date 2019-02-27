@@ -1,5 +1,5 @@
-10.0.0.1
-10.0.0.3
-10.0.0.7
-10.0.0.8
-10.0.0.11
+["Router_ISPe", {'device_type': 'cisco_ios','ip': '10.0.0.1','username': 'ccna','password': 'cisco',}]
+["Router_1", {'device_type': 'cisco_ios','ip': '10.0.0.3','username': 'ccna','password': 'cisco',}]
+["Router_2", {'device_type': 'cisco_ios','ip': '10.0.0.7','username': 'ccna','password': 'cisco',}]
+["Router_3", {'device_type': 'cisco_ios','ip': '10.0.0.8','username': 'ccna','password': 'cisco',}]
+["Router_4", {'device_type': 'cisco_ios','ip': '10.0.0.11','username': 'ccna','password': 'cisco',}]

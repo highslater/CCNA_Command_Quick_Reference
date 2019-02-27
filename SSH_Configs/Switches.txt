@@ -1,5 +1,5 @@
-10.0.0.10
-10.0.0.9
-10.0.0.6
-10.0.0.5
-10.0.0.4
+["Switch_1", {'device_type': 'cisco_ios','ip': '10.0.0.4','username': 'ccna','password': 'cisco',}]
+["Switch_2", {'device_type': 'cisco_ios','ip': '10.0.0.5','username': 'ccna','password': 'cisco',}]
+["Switch_3", {'device_type': 'cisco_ios','ip': '10.0.0.6','username': 'ccna','password': 'cisco',}]
+["Switch_4", {'device_type': 'cisco_ios','ip': '10.0.0.10','username': 'ccna','password': 'cisco',}]
+["Switch_5", {'device_type': 'cisco_ios','ip': '10.0.0.9','username': 'ccna','password': 'cisco',}]
