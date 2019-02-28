@@ -7,6 +7,7 @@ import time
 
 f1 = open('Routers.txt')
 f2 = open('Switches.txt')
+f3 = []
 
 config_commands = [
     "ip host pc1 10.0.1.2\n",
@@ -26,7 +27,7 @@ config_commands = [
     "ip host ispe 10.0.0.1\n",
 ]
 
-for file in (f1, f2):
+for file in (f1, f2, f3):
     for line in file:
         D = eval(line)[1]
         R = eval(line)[0]

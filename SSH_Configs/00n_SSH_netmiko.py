@@ -10,9 +10,10 @@ import time
 
 f1 = open('Routers.txt')
 f2 = open('Switches.txt')
+f3 = []
 
 #for file in (f1, f2):
-for file in (f1, f2):
+for file in (f1, f3):
     for line in file:
         D = eval(line)[1]
         R = eval(line)[0]
