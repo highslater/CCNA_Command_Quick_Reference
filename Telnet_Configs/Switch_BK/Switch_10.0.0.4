@@ -7,7 +7,9 @@ SW1#terminal length 0
 SW1#show running-config
 Building configuration...
 
-Current configuration : 4057 bytes
+Current configuration : 4201 bytes
+!
+! Last configuration change at 16:44:21 EST Sat Mar 2 2019 by ccna
 !
 version 15.1
 service timestamps debug datetime msec
@@ -28,6 +30,8 @@ enable secret 5 $1$c69i$8IDrzZilO2zd/OB2on7LF/
 !
 username ccna privilege 15 secret 5 $1$1Wi6$Gq6lyD56sRMjG397eUMSV/
 no aaa new-model
+clock timezone EST -5 0
+clock summer-time DST recurring
 vtp domain gns3.com
 vtp mode transparent
 no ip routing
@@ -256,6 +260,7 @@ line vty 0 4
  login local
  transport input all
 !
+ntp server 1.0.0.1
 end
 
 SW1#exit
