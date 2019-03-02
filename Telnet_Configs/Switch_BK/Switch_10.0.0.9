@@ -1,0 +1,259 @@
+
+
+     *****     With Great Power Comes Great Resposibility     *****
+
+
+SW5#terminal length 0
+SW5#show running-config
+Building configuration...
+
+Current configuration : 4016 bytes
+!
+version 15.1
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service compress-config
+!
+hostname SW5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging discriminator EXCESS severity drops 6 msg-body drops EXCESSCOLL 
+logging buffered 50000
+logging console discriminator EXCESS
+enable secret 5 $1$x1OE$zK7jrQKguNAS6JGMKDSFz1
+!
+username ccna privilege 15 secret 5 $1$VvSS$oc.LSXDIrk3Z/aQOg4Hpl1
+no aaa new-model
+vtp domain gns3.com
+vtp mode transparent
+no ip routing
+no ip icmp rate-limit unreachable
+!
+no ip cef
+!
+!
+ip domain-name gns3.com
+no ipv6 cef
+ipv6 multicast rpf use-bgp
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+ name vlan__2
+!
+vlan 3
+ name vlan__3
+!
+vlan 4
+ name vlan__4
+!
+vlan 5
+ name vlan__5
+!
+vlan 6
+ name vlan__6
+!
+vlan 7
+ name vlan__7
+!
+vlan 8
+ name vlan__8
+!
+vlan 9
+ name vlan__9
+!
+vlan 10
+ name vlan__10
+!
+vlan 99
+ name MANAGEMENT
+!
+vlan 100
+ name PRODUCTION
+!
+ip tcp synwait-time 5
+ip ssh version 2
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet0/1
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet0/2
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet0/3
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet1/0
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet1/1
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet1/2
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet1/3
+ description MANAGEMENT VLAN 99
+ switchport access vlan 99
+ switchport mode access
+ duplex auto
+!
+interface Ethernet2/0
+ description PRODUCTION VLAN 100 GATEWAY
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Ethernet2/1
+ description PRODUCTION VLAN 100
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Ethernet2/2
+ description PRODUCTION VLAN 100
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Ethernet2/3
+ description PRODUCTION VLAN 100
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Ethernet3/0
+ description PRODUCTION VLAN 100
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Ethernet3/1
+ description PRODUCTION VLAN 100
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Ethernet3/2
+ description PRODUCTION VLAN 100
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Ethernet3/3
+ description PRODUCTION VLAN 100
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+interface Vlan1
+ ip address 10.0.0.9 255.255.255.0
+ no ip route-cache
+ shutdown
+!
+interface Vlan99
+ ip address 10.0.0.9 255.255.255.0
+!
+!
+no ip http server
+!
+!
+no cdp run
+!
+!
+!
+control-plane
+!
+banner exec ^C
+
+     *****     With Great Power Comes Great Resposibility     *****
+
+^C
+banner login ^C
+
+ UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+
+   You must have explicit, authorized permission to access or configure this device.
+   Unauthorized attempts and actions to access or use this system may result in civil and/or
+   criminal penalties.
+   All activities performed on this device are logged and monitored.
+
+ UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+
+
+^C
+banner motd ^C
+
+
+ CCNA Command Quick Reference
+
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ login local
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ login local
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ login local
+ transport input all
+!
+end
+
+SW5#exit

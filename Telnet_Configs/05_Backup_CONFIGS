@@ -23,10 +23,9 @@ for file in (Routers, Switches):
         if password:
             tn.read_until(b"Password: ")
             tn.write(password.encode('ascii') + b"\n")
+
         tn.write(b"terminal length 0\n")
-        tn.write(b"show running-config | i hostname\n")
-#        HOSTNAME = tn.read_all().decode('ascii')
-#        print("Getting Running Config From: " + str(HOSTNAME) + str(HOST))
+
         print("Getting Running Config From: " + str(HOST))
         tn.write(b"show running-config\n")
         tn.write(b"exit\n")
@@ -34,9 +33,9 @@ for file in (Routers, Switches):
         readOUTPUT = tn.read_all().decode('ascii')
 
         if file == Routers:
-            saveOUTPUT = open("Router_" + HOST, 'w')
+            saveOUTPUT = open("Router_BK/Router_" + HOST, 'w')
         if file == Switches:
-            saveOUTPUT = open("Switch_" + HOST, 'w')
+            saveOUTPUT = open("Switch_BK/Switch_" + HOST, 'w')
 
         saveOUTPUT.write(str(readOUTPUT))
         saveOUTPUT.close

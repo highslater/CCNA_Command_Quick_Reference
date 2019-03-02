@@ -1,0 +1,284 @@
+
+
+     *****     With Great Power Comes Great Resposibility     *****
+
+
+ISPe#terminal length 0
+ISPe#show running-config
+Building configuration...
+
+Current configuration : 4239 bytes
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname ISPe
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$xLr.$10TjCYafWXb4Nq7zRpAnX1
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+no ip icmp rate-limit unreachable
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+ip domain name gns3.com
+ip host pc1 10.0.1.2
+ip host pc2 10.0.2.2
+ip host pc3 10.0.3.2
+ip host pc4 10.0.4.2
+ip host ub1 10.0.0.2
+ip host sw1 10.0.0.4
+ip host sw2 10.0.0.5
+ip host sw3 10.0.0.6
+ip host sw4 10.0.0.10
+ip host sw5 10.0.0.9
+ip host r1 10.0.0.3
+ip host r2 10.0.0.7
+ip host r3 10.0.0.8
+ip host r4 10.0.0.11
+ip host ispe 10.0.0.1
+ip name-server 192.168.122.1
+ip name-server 192.168.1.1
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+username ccna privilege 15 secret 5 $1$CRR.$Ykwj5YAULiyvKhYVbgsjm1
+!
+redundancy
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Loopback to IDENTIFY Router
+ ip address 1.0.0.1 255.255.255.255
+!
+interface Ethernet0/0
+ description Ethernet LINK to NETWORK 10.0.0.0 /24
+ ip address 10.0.0.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+!
+interface Ethernet0/1
+ description Ethernet NAT LINK to NETWORK 192.168.1.0 /24 ADDRESS DHCP
+ ip address dhcp
+ ip nat outside
+ ip virtual-reassembly in
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+interface Serial2/0
+ description Serial LINK to R1 NETWORK 172.16.20.0 /24
+ ip address 172.16.20.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ serial restart-delay 0
+!
+interface Serial2/1
+ description Serial LINK to R2 NETWORK 172.16.10.0 /24
+ ip address 172.16.10.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ serial restart-delay 0
+!
+interface Serial2/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial2/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+!
+router eigrp 90
+ network 1.0.0.1 0.0.0.0
+ network 172.16.0.0
+ passive-interface Ethernet0/0
+ passive-interface Ethernet0/1
+ eigrp router-id 1.0.0.1
+!
+router ospf 110
+ router-id 1.0.0.1
+ shutdown
+ passive-interface Ethernet0/0
+ passive-interface Ethernet0/1
+ network 1.0.0.1 0.0.0.0 area 0
+ network 172.16.0.0 0.0.255.255 area 0
+!
+router rip
+ version 2
+ passive-interface Ethernet0/0
+ passive-interface Ethernet0/1
+ network 1.0.0.0
+ network 172.16.0.0
+ default-information originate
+ no auto-summary
+!
+ip forward-protocol nd
+!
+!
+ip http server
+no ip http secure-server
+ip nat inside source list ALLOW_NAT interface Ethernet0/1 overload
+!
+ip access-list standard ALLOW_NAT
+ permit 10.0.0.0 0.0.255.255
+ permit 172.16.10.0 0.0.0.255
+ permit 172.16.20.0 0.0.0.255
+ permit 172.16.30.0 0.0.0.255
+ permit 172.16.40.0 0.0.0.255
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+banner exec ^C
+
+     *****     With Great Power Comes Great Resposibility     *****
+
+^C
+banner login ^C
+
+ UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+
+   You must have explicit, authorized permission to access or configure this device.
+   Unauthorized attempts and actions to access or use this system may result in civil and/or
+   criminal penalties.
+   All activities performed on this device are logged and monitored.
+
+ UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
+
+
+^C
+banner motd ^C
+
+
+ CCNA Command Quick Reference
+
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ login local
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ login local
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ login local
+ transport input all
+!
+!
+end
+
+ISPe#exit
